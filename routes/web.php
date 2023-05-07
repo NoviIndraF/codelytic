@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landingpage.index');
+});
+
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+
+Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/dashboard', function(){
+    return view('dashboard.index');
 });
