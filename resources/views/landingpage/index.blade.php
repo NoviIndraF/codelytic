@@ -26,29 +26,20 @@
 
   <!-- Template Main CSS File -->
   <link href="/assets/landingpage/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Appland
-  * Updated: Mar 10 2023 with Bootstrap v5.2.3
-  * Template URL: https://bootstrapmade.com/free-bootstrap-app-landing-page-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
 
-  @include('landingpage.header')
-
-  @include('landingpage.banner')
+  @include('landingpage.layouts.header')
+  @include('landingpage.layouts.banner')
 
   <main id="main">
-    @include('landingpage.features')
-    @include('landingpage.features_detail')
-    @include('landingpage.galleries')
+    @include('landingpage.layouts.features')
+    @include('landingpage.layouts.features_detail')
+    @include('landingpage.layouts.galleries')
   </main><!-- End #main -->
 
-  @include('landingpage.footer')
+  @include('landingpage.layouts.footer')
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

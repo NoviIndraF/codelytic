@@ -13,7 +13,6 @@
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#features">App Features</a></li>
           <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li><a href="/login" class="getstarted scrollto nav-link">Login/Register</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
