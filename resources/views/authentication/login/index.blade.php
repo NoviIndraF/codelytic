@@ -28,10 +28,10 @@
                             <form class="mt-5 mb-5 login-input" method="post" action="/login">
                                 @csrf
                                 <div class="form-group">
-                                    <input id="email" name="email" type="email" class="form-control" placeholder="Email">
+                                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" autofocus required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password">
+                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
                                 </div>
                                 <button class="btn login-form__btn submit w-100" type="submit">Login</button>
                             </form>
