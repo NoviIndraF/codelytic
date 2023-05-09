@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\LoginController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,6 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/dashboard', function(){
     return view('dashboard.index');
 })->middleware('auth');
+
+Route::resource('/dashboard/rooms', RoomController::class)->middleware('auth');
+Route::get('/dashboard/rooms/checkSlug', [RoomController::class, 'checkSlug'])->middleware('auth');

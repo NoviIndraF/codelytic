@@ -13,6 +13,8 @@ class Chapter extends Model
         'id'
     ];
 
+    protected $with = ['materi'];
+
     public function materi(){
         return $this->belongsTo(Materi::class);
     }

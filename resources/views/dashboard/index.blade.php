@@ -1,7 +1,18 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 mb-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                    <h3 class="mb-1 mt-1">Selamat datang, {{ auth()->user()->name }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     <div class="row">
         <div class="col-lg-3 col-sm-6">
             <div class="card gradient-1">

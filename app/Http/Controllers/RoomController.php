@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
-use App\Http\Requests\StoreRoomRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateRoomRequest;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class RoomController extends Controller
 {
@@ -15,7 +16,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.room.index',[
+            'rooms' => Room::where('user_id', auth()->user()->id)->get()
+        ]);
     }
 
     /**
@@ -25,18 +28,18 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.room.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRoomRequest  $request
+     * @param  \Illuminate\Http\Request;  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRoomRequest $request)
+    public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -82,5 +85,11 @@ class RoomController extends Controller
     public function destroy(Room $room)
     {
         //
+    }
+
+    public function checkSlug(Request $request){
+        return $request;
+        $slug = SlugService::createSlug(Room::class, 'slug', $request->name);
+        return response()->json(['slug' => $slug]);
     }
 }
