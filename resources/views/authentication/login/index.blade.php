@@ -10,7 +10,21 @@
                     <div class="card login-form mb-0">
                         <div class="card-body pt-5">
                             <a class="text-center"> <h2>Login</h2></a>
-    
+
+                            @if(session()->has('success'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                    </button> {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if(session()->has('loginError'))
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="danger" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                    </button> {{ session('loginError') }}
+                                </div>
+                            @endif
+
                             <form class="mt-5 mb-5 login-input" method="post" action="/login">
                                 @csrf
                                 <div class="form-group">

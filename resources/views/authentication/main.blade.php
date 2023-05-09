@@ -48,5 +48,7 @@
     <script src="/assets/dashboard/js/settings.js"></script>
     <script src="/assets/dashboard/js/gleek.js"></script>
     <script src="/assets/dashboard/js/styleSwitcher.js"></script>
+    <script src="/assets/dashboard/plugins/validation/jquery.validate.min.js"></script>
+    <script src="/assets/dashboard/plugins/validation/jquery.validate-init.js"></script>
 </body>
 </html>
