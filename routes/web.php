@@ -33,5 +33,5 @@ Route::get('/dashboard', function(){
     return view('dashboard.index');
 })->middleware('auth');
 
-Route::resource('/dashboard/rooms', RoomController::class)->middleware('auth');
 Route::get('/dashboard/rooms/checkSlug', [RoomController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/rooms', RoomController::class)->middleware('auth');

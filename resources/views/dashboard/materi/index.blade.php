@@ -9,10 +9,10 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-lg-10">
-                                <h4>Daftar Kelas</h4>
+                                <h4>Daftar Materi</h4>
                             </div>
                             <div class="col-lg-2">
-                                <a href="/dashboard/rooms/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Kelas<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
+                                <a href="/dashboard/materis/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Materi<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
                                 </a>
                             </div>
                         </div>
@@ -28,27 +28,27 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-1">#</th>
-                                    <th class="col-md-1">Code</th>
-                                    <th class="col-md-2">Name</th>
-                                    <th class="col-md-2">Jurusan</th>
-                                    <th class="col-md-4">Deskripsi</th>
+                                    <th class="col-md-1">Judul</th>
+                                    <th class="col-md-2">Deskripsi</th>
+                                    <th class="col-md-2">Kelas</th>
+                                    <th class="col-md-4">Status</th>
                                     <th class="col-md-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($rooms as $room)       
+                                @foreach ($materis as $materi)       
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $room->code }}</td>
-                                    <td>{{ $room->name }}</td>
-                                    <td>{{ $room->major }}</td>
-                                    <td>{{ $room->description }}</td>
+                                    <td>{{ $materi->code }}</td>
+                                    <td>{{ $materi->name }}</td>
+                                    <td>{{ $materi->major }}</td>
+                                    <td>{{ $materi->description }}</td>
                                     <td> 
                                         <div class="row">
-                                            <a href="/dashboard/rooms/{{ $room->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
+                                            <a href="/dashboard/materis/{{ $materi->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
                                             </a>
                                             
-                                            <form action="/dashboard/rooms/{{ $room->slug }}" method="post" class="d-inline">
+                                            <form action="/dashboard/materis/{{ $materi->slug }}" method="post" class="d-inline">
                                                 @method('delete')
                                                 @csrf
                                                 <button onclick="return confirm('are you sure?')" class="btn mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>

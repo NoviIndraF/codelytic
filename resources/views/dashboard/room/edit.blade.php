@@ -9,17 +9,18 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-lg-10">
-                                <h4>Tambah Kelas</h4>
+                                <h4>Edit Kelas</h4>
                             </div>
                         </div>
                     </div>
-                    <form class="form-valide mt-24" action="/dashboard/rooms" method="post">
+                    <form class="form-valide mt-24" action="/dashboard/rooms/{{ $room->slug }}" method="post">
+                        @method('put')
                         @csrf
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label" for="name">Nama kelas <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control input-default" id="name" name="name" placeholder="Masukkan Nama Kelas..." required value="{{ old('name') }}">
+                                <input type="text" class="form-control input-default" id="name" name="name" placeholder="Masukkan Nama Kelas..." required value="{{ old('name', $room->name) }}">
                                 @error('name') 
                                 <h6 class="text-danger">* 
                                     {{ $message }}
@@ -31,7 +32,7 @@
                             <label class="col-lg-3 col-form-label" for="slug">Slug <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" id="slug" name="slug"  readonly required value="{{ old('slug') }}">
+                                <input type="text" class="form-control" id="slug" name="slug"  readonly required value="{{ old('slug', $room->slug) }}">
                                 @error('slug') 
                                 <h6 class="text-danger">* 
                                     {{ $message }}
@@ -43,20 +44,19 @@
                             <label class="col-lg-3 col-form-label" for="major">Jurusan <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control input-default" id="major" name="major" placeholder="Masukkan Nama Jurusan..." required value="{{ old('major') }}">
+                                <input type="text" class="form-control input-default" id="major" name="major" placeholder="Masukkan Nama Jurusan..." required value="{{ old('major', $room->major) }}">
                                 @error('major') 
                                     <h6 class="text-danger">* 
                                         {{ $message }}
                                     </h6>
                                 @enderror
                             </div>
-                            
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label" for="description" value="{{ old('description') }}">Deskripsi/catatan
+                            <label class="col-lg-3 col-form-label" for="description">Deskripsi/catatan
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control input-default" id="description" name="description" placeholder="Deskripsi Kelas" value="{{ old('description') }}">
+                                <input type="text" class="form-control" id="description" name="description" placeholder="Deskripsi Kelas" value="{{ old('description', $room->description) }}">
                                 @error('description') 
                                     <h6 class="text-danger">* 
                                         {{ $message }}
@@ -67,7 +67,7 @@
                         <div class="form-group row">
                             <div class="col-lg-3"></div>
                             <div class="col-lg-8">
-                                <button class="btn login-form__btn submit" type="submit">Tambah Kelas</button>
+                                <button class="btn login-form__btn submit warning" type="submit">Edit Kelas</button>
                             </div>
                         </div>
                     </form>
