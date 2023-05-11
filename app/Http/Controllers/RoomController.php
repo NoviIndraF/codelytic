@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateRoomRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class RoomController extends Controller

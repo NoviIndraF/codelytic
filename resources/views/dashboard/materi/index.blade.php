@@ -29,9 +29,9 @@
                                 <tr>
                                     <th class="col-md-1">#</th>
                                     <th class="col-md-1">Judul</th>
-                                    <th class="col-md-2">Deskripsi</th>
                                     <th class="col-md-2">Kelas</th>
-                                    <th class="col-md-4">Status</th>
+                                    <th class="col-md-4">Deskripsi</th>
+                                    <th class="col-md-2">Status</th>
                                     <th class="col-md-2">Action</th>
                                 </tr>
                             </thead>
@@ -39,12 +39,21 @@
                                 @foreach ($materis as $materi)       
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $materi->code }}</td>
+                                    <td>{{ $materi->title }}</td>
                                     <td>{{ $materi->name }}</td>
-                                    <td>{{ $materi->major }}</td>
                                     <td>{{ $materi->description }}</td>
+                                    <td>
+                                        @if ( $materi->status == 1)
+                                            <button type="button" class="btn mb-1 btn-rounded btn-success" disabled="disabled">Aktif</button>
+                                        @else
+                                            <button type="button" class="btn mb-1 btn-rounded btn-danger" disabled="disabled">Nonaktif</button>
+                                        @endif
+                                    </td>
                                     <td> 
                                         <div class="row">
+                                            <a href="/dashboard/materis/{{ $materi->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
+                                            </a>
+
                                             <a href="/dashboard/materis/{{ $materi->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
                                             </a>
                                             

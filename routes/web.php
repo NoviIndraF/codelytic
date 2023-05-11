@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MateriController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\LoginController;
 use GuzzleHttp\Middleware;
@@ -35,3 +36,6 @@ Route::get('/dashboard', function(){
 
 Route::get('/dashboard/rooms/checkSlug', [RoomController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/rooms', RoomController::class)->middleware('auth');
+
+Route::get('/dashboard/materis/checkSlug', [MateriController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/materis', MateriController::class)->middleware('auth');
