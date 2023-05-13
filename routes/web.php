@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\RoomController;
@@ -39,3 +40,8 @@ Route::resource('/dashboard/rooms', RoomController::class)->middleware('auth');
 
 Route::get('/dashboard/materis/checkSlug', [MateriController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/materis', MateriController::class)->middleware('auth');
+
+Route::get('/dashboard/chapters/checkSlug', [ChapterController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/chapters', ChapterController::class)->middleware('auth');
+
+Route::post('upload', [ChapterController::class, 'upload'])->name('ckeditor.upload')->middleware('auth');

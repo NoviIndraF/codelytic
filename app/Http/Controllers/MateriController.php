@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chapter;
 use App\Models\Materi;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -77,7 +78,10 @@ class MateriController extends Controller
      */
     public function show(Materi $materi)
     {
-        //
+        return view('dashboard.materi.show',[
+            'materi' => $materi,
+            'chapters' => Chapter::where('materi_id', $materi->id)->get()
+        ]);
     }
 
     /**
