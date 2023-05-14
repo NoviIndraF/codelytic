@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-white">Kelas</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">5</h2>
+                        <h2 class="text-white">{{ $count_room }}</h2>
                         <p class="text-white mb-0">Jan - March 2019</p>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-white">Materi</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">16</h2>
+                        <h2 class="text-white">{{ $count_materi }}</h2>
                         <p class="text-white mb-0">Jan - March 2019</p>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-book"></i></span>
@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-white">Tugas</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">12</h2>
+                        <h2 class="text-white">{{ $count_chapter }}</h2>
                         <p class="text-white mb-0">Jan - March 2019</p>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-file"></i></span>

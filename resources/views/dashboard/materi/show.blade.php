@@ -14,11 +14,15 @@
                                 <p>{{ $materi->description }}</p>
                             </div>
                             <div class="col-lg-2">
-                                @if ( $materi->status == 1)
-                                    <button type="button" class="btn mb-1 btn-rounded btn-success">Aktif</button>
-                                @else
-                                    <button type="button" class="btn mb-1 btn-rounded btn-danger">Nonaktif</button>
-                                @endif
+                                <form action="/dashboard/materis/updateStatus" method="post">
+                                    @csrf
+                                        @if ( $materi->status == 1)
+                                            <button type="submit" onclick="return confirm('Apakah anda ingin menonaktifkan materi {{ $materi->title }}?')" class="btn mb-1 btn-rounded btn-success">Aktif</button>
+                                        @else
+                                            <button type="submit" onclick="return confirm('Apakah anda ingin mengaktifkan materi {{ $materi->title }}?')" class="btn mb-1 btn-rounded btn-danger">Nonaktif</button>
+                                        @endif
+                                        <input type="hidden" id="materi_id" name="materi_id" value="{{ $materi->id }}">
+                                </form>
                             </div>
                         </div>
                         @if(session()->has('success'))
@@ -69,7 +73,7 @@
                                         <form action="/dashboard/chapters/{{ $chapter->slug }}" method="post" class="d-inline">
                                             @method('delete')
                                             @csrf
-                                            <button onclick="return confirm('are you sure?')" class="btn mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>
+                                            <button onclick="return confirm('Apakah anda ingin menghapus {{ $chapter->title }}?')" class="btn sweet-success-cancel mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -80,7 +84,7 @@
                         </table>
                         @else
                         <p>Anda belum memiliki konten materi...</p>
-                        <a href="/dashboard/chapters/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Konten Materi<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
+                        <a href={{ route('chapters.create', ['materi_id' => $materi->id]) }} type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Konten Materi<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
                         </a>
                         @endif
                         
@@ -91,5 +95,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelector(".sweet-success-cancel")
+    .onclick=function(){
+        swal({
+            title:"Are you sure to delete ?",
+            text:"You will not be able to recover this imaginary file !!",
+            type:"warning",
+            showCancelButton:!0,
+            confirmButtonColor:"#DD6B55",
+            confirmButtonText:"Yes, delete it !!",
+            cancelButtonText:"No, cancel it !!",
+            closeOnConfirm:!1,
+            closeOnCancel:!1},
+            function(e){
+                e
+                ?swal("Deleted !!","Hey, your imaginary file has been deleted !!","success")
+                :swal("Cancelled !!","Hey, your imaginary file is safe !!","error")})},
+</script>
 
 @endsection

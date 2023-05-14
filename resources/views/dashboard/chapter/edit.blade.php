@@ -18,17 +18,18 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-lg-10">
-                                <h4>Tambah Konten Materi</h4>
+                                <h4>Edit Konten Materi</h4>
                             </div>
                         </div>
                     </div>
-                    <form class="form-valide mt-24" action="/dashboard/chapters/" method="post">
+                    <form class="form-valide mt-24" action="/dashboard/chapters/{{ $chapter->slug }}" method="post">
+                        @method('put')
                         @csrf
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label" for="title">Judul Konten Materi <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Masukkan Judul Konten Materi..." required value="{{ old('title') }}">
+                                <input type="text" class="form-control input-default" id="title" name="title" placeholder="Masukkan Judul Konten Materi..." required value="{{ old('title', $chapter->title) }}">
                                 @error('title') 
                                 <h6 class="text-danger">* 
                                     {{ $message }}
@@ -40,7 +41,7 @@
                             <label class="col-lg-3 col-form-label" for="slug">Slug <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" id="slug" name="slug"  readonly required value="{{ old('slug') }}">
+                                <input type="text" class="form-control" id="slug" name="slug"  readonly required value="{{ old('slug', $chapter->slug) }}">
                                 @error('slug') 
                                 <h6 class="text-danger">* 
                                     {{ $message }}
@@ -52,7 +53,7 @@
                             <label class="col-lg-3 col-form-label" for="index">Urutan <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-2">
-                                <input type="number" min="0" class="form-control input-default" id="index" name="index" placeholder="Urutan Ke..." value="{{ old('index') }}">
+                                <input type="number" min="0" class="form-control input-default" id="index" name="index" placeholder="Urutan Ke..." value="{{ old('index', $chapter->index) }}">
                                 @error('index') 
                                     <h6 class="text-danger">* 
                                         {{ $message }}
@@ -64,7 +65,7 @@
                             <label class="col-lg-3 col-form-label" for="description">Deskripsi/catatan
                             </label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control input-default" id="description" name="description" placeholder="Deskripsi Konten Materi..." value="{{ old('description') }}">
+                                <input type="text" class="form-control input-default" id="description" name="description" placeholder="Deskripsi Konten Materi..." value="{{ old('description', $chapter->description) }}">
                                 @error('description') 
                                     <h6 class="text-danger">* 
                                         {{ $message }}
@@ -78,8 +79,8 @@
                         </div>
                         <div class="form-group" row>
                             <div class="col-lg-12">
-                                <input type="hidden" id="materi_id" name="materi_id" value="{{ $materi}}">
-                                <textarea class="form-control editor " id="editor" name="editor">{{ old('editor') }}</textarea>
+                                <input type="hidden" id="materi_id" name="materi_id" value="{{ $materi_id}}">
+                                <textarea class="form-control editor " id="editor" name="editor">{{ old('editor', $chapter->content) }}</textarea>
                                 @error('editor') 
                                     <h6 class="text-danger">* 
                                         {{ $message }}
@@ -90,7 +91,7 @@
                         <div class="form-group row">
                             <div class="col-lg-9"></div>
                             <div class="col-lg-3">
-                                <button class="btn login-form__btn submit" type="submit">Buat Konten Materi</button>
+                                <button class="btn login-form__btn submit" type="submit">Edit Konten Materi</button>
                             </div>
                         </div>
                     </form>

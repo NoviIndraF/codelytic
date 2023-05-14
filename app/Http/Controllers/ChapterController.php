@@ -10,6 +10,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Session;
 use App\Models\Messages;
 
@@ -43,14 +44,27 @@ class ChapterController extends Controller
      */
     public function store(Request $request)
     { 
+        
         $validateData = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|unique:chapters',
             'description' => '',
             'index' => 'required',
-            'content' => 'required',
+            'editor' => 'required',
             'materi_id' => 'required',
         ]);
+
+        $index = DB::table('chapters')
+                ->select('index')
+                ->where('materi_id', 'LIKE', $validateData['materi_id'])
+                ->where('index', 'LIKE', $validateData['index'])
+                ->get();
+                
+        if(!$index->isEmpty()){
+            throw ValidationException::withMessages(['index' => ['Index has been exists'],]);
+        }
+
+        $validateData['content'] = $validateData['editor'];
         
         Chapter::create($validateData);
         
@@ -82,8 +96,11 @@ class ChapterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Chapter $chapter)
-    {
-        //
+    { 
+        return view('dashboard.chapter.edit', [
+            'chapter' => $chapter,
+            'materi_id' => $chapter->materi_id,
+        ]);
     }
 
     /**
@@ -93,9 +110,42 @@ class ChapterController extends Controller
      * @param  \App\Models\Chapter  $chapter
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateChapterRequest $request, Chapter $chapter)
+    public function update(Request $request, Chapter $chapter)
     {
-        //
+        
+        $rules = [
+            'title' => 'required|max:255',
+            'description' => '',
+            'index' => 'required',
+            'editor' => 'required',
+            'materi_id' => 'required',
+        ];
+    
+       
+
+        if($request->slug != $chapter->slug){
+            $rules['slug'] = 'required|unique:chapters';
+        }
+
+        $validateData =$request->validate($rules);
+        
+        if($request->index != $chapter->index && Chapter::where('index', '=', $validateData['index'])->exists()){
+            throw ValidationException::withMessages(['index' => ['Index has been exists'],]);
+        }
+
+       
+
+        $validateData = array_replace($validateData, ['content' => $validateData['editor']]);
+        unset($validateData['editor']);
+        
+        Chapter::where('id', $chapter->id)->update($validateData);
+
+        $materi = DB::table('materis')
+        ->where('id', $request->materi_id)
+        ->select(
+            'materis.slug as materi_slug',)
+        ->first();
+        return redirect('dashboard/materis/'.$materi->materi_slug)->with('success', 'Data Konten Materi: '.$chapter->title.' telah diperbarui');
     }
 
     /**
@@ -126,7 +176,7 @@ class ChapterController extends Controller
      {
         $data = array();
          $validator = Validator::make($request->all(), [
-              'upload' => 'required|mimes:png,jpg,jpeg|max:2048'
+              'upload' => 'required|mimes:png,jpg,jpeg|max:1024'
          ]);
          if ($validator->fails()) {
               $data['uploaded'] = 0;

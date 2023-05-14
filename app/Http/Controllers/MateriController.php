@@ -125,6 +125,30 @@ class MateriController extends Controller
         return redirect('dashboard/materis')->with('success', 'Data Kelas: '.$materi->title.' telah diperbarui');
     }
 
+    
+    public function updateStatus(Request $request)
+    {
+        $materi = DB::table('materis')
+        ->where('id', '=', $request->materi_id)->first();
+        
+        $status = $materi->status;
+        if($status == 0){
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+        Materi::where('id', $materi->id)->update(['status' => $status]);
+
+        $sstatus='';
+        if($status == 0){
+            $sstatus= 'Nonaktif';
+        } else {
+            $sstatus= 'Aktif';
+        }
+
+        return redirect('dashboard/materis')->with('success', 'Materi : '.$materi->title.' telah '.$sstatus);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

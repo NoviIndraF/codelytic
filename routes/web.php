@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\RoomController;
@@ -31,15 +32,14 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dashboard', function(){
-    return view('dashboard.index');
-})->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::get('/dashboard/rooms/checkSlug', [RoomController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/rooms', RoomController::class)->middleware('auth');
 
 Route::get('/dashboard/materis/checkSlug', [MateriController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/materis', MateriController::class)->middleware('auth');
+Route::post('/dashboard/materis/updateStatus', [MateriController::class, 'updateStatus'])->middleware('auth');
 
 Route::get('/dashboard/chapters/checkSlug', [ChapterController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/chapters', ChapterController::class)->middleware('auth');

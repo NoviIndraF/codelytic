@@ -69,7 +69,7 @@
                         <div class="form-group row">
                             <div class="col-lg-3"></div>
                             <div class="col-lg-8">
-                                <button class="btn login-form__btn submit" type="submit">Edit Materi</button>
+                                <button class="btn login-form__btn submit" type="submit">Simpan Konten Materi</button>
                             </div>
                         </div>
                     </form>
