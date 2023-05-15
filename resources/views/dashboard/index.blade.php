@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-white">Tugas</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">{{ $count_chapter }}</h2>
+                        <h2 class="text-white">{{ $count_tasks }}</h2>
                         <p class="text-white mb-0">Jan - March 2019</p>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-file"></i></span>

@@ -22,19 +22,18 @@ class DashboardController extends Controller
             'materis.*')
         ->get();
 
-        $chapters = DB::table('chapters')
-        ->join('materis', 'materis.id', '=', 'chapters.materi_id')
-        ->join('rooms', 'rooms.id', '=', 'materis.room_id')
+        $tasks = DB::table('tasks')
+        ->join('rooms', 'rooms.id', '=', 'tasks.room_id')
         ->join('users', 'users.id', '=', 'rooms.user_id')
         ->where('users.id', '=', auth()->user()->id)
         ->select(
-            'chapters.*')
+            'tasks.*')
         ->get();
 
         return view('dashboard.index', [
             'count_room' => count($rooms),
             'count_materi' => count($materis),
-            'count_chapter' => count($chapters),
+            'count_tasks' => count($tasks),
         ]);
     }
 }

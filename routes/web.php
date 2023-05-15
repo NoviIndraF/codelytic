@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\MateriController;
-use App\Http\Controllers\RoomController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MateriController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TestController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -45,3 +47,11 @@ Route::get('/dashboard/chapters/checkSlug', [ChapterController::class, 'checkSlu
 Route::resource('/dashboard/chapters', ChapterController::class)->middleware('auth');
 
 Route::post('upload', [ChapterController::class, 'upload'])->name('ckeditor.upload')->middleware('auth');
+
+Route::get('/dashboard/tasks/checkSlug', [TaskController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/tasks', TaskController::class)->middleware('auth');
+Route::post('/dashboard/tasks/updateStatus', [TaskController::class, 'updateStatus'])->middleware('auth');
+
+
+
+Route::get('/dashboard/test', [TestController::class, 'index'])->middleware('auth');

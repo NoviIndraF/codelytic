@@ -16,11 +16,13 @@ class Materi extends Model
 
     protected $with = ['room'];
 
-    public function room(){
+    public function room()
+    {
         return $this->belongsTo(Room::class);
     }
 
-    public function chapter(){
+    public function chapter()
+    {
         return $this->hasMany(Chapter::class);
     }
 

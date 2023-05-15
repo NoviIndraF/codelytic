@@ -2,28 +2,23 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
-
-class Room extends Model
+class Question extends Model
 {
     use HasFactory, Sluggable;
 
     protected $guarded = [
         'id'
     ];
-    protected $with = ['user'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $with = ['quiz'];
 
-    public function materi()
+    public function quiz()
     {
-        return $this->hasMany(Materi::class);
+        return $this->belongsTo(Quiz::class);
     }
 
     public function getRouteKeyName()

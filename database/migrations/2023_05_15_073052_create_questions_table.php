@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChaptersTable extends Migration
+class CreateQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateChaptersTable extends Migration
      */
     public function up()
     {
-        Schema::create('chapters', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('index') ;
             $table->string('title');
             $table->string('description');
             $table->string('content');
-            $table->foreignId('materi_id');
+            $table->string('note');
+            $table->string('answer_correct');
+            $table->foreignId('quiz_id');
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateChaptersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chapters');
+        Schema::dropIfExists('questions');
     }
 }

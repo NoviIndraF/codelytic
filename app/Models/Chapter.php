@@ -16,7 +16,8 @@ class Chapter extends Model
 
     protected $with = ['materi'];
 
-    public function materi(){
+    public function materi()
+    {
         return $this->belongsTo(Materi::class);
     }
 

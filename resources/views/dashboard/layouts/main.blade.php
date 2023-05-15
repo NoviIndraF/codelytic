@@ -17,7 +17,19 @@
     <link rel="stylesheet" href="/assets/dashboard/plugins/chartist/css/chartist.min.css">
     <link rel="stylesheet" href="/assets/dashboard/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <link rel="stylesheet" href="/assets/dashboard/plugins/tables/css/datatable/dataTables.bootstrap4.min.css">
-   
+    <link href="assets/dashboard/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link href="assets/dashboard/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <!-- Page plugins css -->
+    <link href="assets/dashboard/plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Color picker plugins css -->
+    <link href="assets/dashboard/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
+    <!-- Date picker plugins css -->
+    <link href="assets/dashboard/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Daterange picker plugins css -->
+    <link href="assets/dashboard/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="assets/dashboard/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -71,7 +83,6 @@
     <script src="/assets/dashboard/plugins/tables/js/jquery.dataTables.min.js"></script>
     <script src="/assets/dashboard/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
     <script src="/assets/dashboard/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
-
 </body>
 
 </html>
