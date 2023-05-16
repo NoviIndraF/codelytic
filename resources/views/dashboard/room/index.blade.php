@@ -8,22 +8,35 @@
                 <div class="card-body">
                     <div class="card-title">
                         <div class="row">
-                            <div class="col-lg-10">
-                                <h4>Daftar Kelas</h4>
-                            </div>
-                            <div class="col-lg-2">
-                                <a href="/dashboard/rooms/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Kelas<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
-                                </a>
+                            <div class="col-lg-12">
+                                <div class="card gradient-4">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-white">Kelas</h3>
+                                        <div class="d-inline-block">
+                                            <h2 class="text-white">{{ $count_room }}</h2>
+                                        </div>
+                                        <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @if(session()->has('success'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                </button> {{ session('success') }}
-                            </div>
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </button>{{ session('success') }}
+                        </div>
                         @endif
                     </div>
-                    <div class="table-responsive mt-4">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <h4>Daftar Kelas</h4>
+                        </div>
+                        <div class="col-lg-2">
+                            <a href="/dashboard/rooms/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Kelas<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>
@@ -51,7 +64,7 @@
                                             <form action="/dashboard/rooms/{{ $room->slug }}" method="post" class="d-inline">
                                                 @method('delete')
                                                 @csrf
-                                                <button onclick="return confirm('are you sure?')" class="btn mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>
+                                                <button onclick="return confirm('Apakah anda ingin menghapus kelas: {{ $room->name }}?')" class="btn mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
                                         </div>

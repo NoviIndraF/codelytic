@@ -30,10 +30,19 @@ class DashboardController extends Controller
             'tasks.*')
         ->get();
 
+        $quizzes = DB::table('quizzes')
+        ->join('rooms', 'rooms.id', '=', 'quizzes.room_id')
+        ->join('users', 'users.id', '=', 'rooms.user_id')
+        ->where('users.id', '=', auth()->user()->id)
+        ->select(
+            'quizzes.*')
+        ->get();
+
         return view('dashboard.index', [
             'count_room' => count($rooms),
             'count_materi' => count($materis),
             'count_tasks' => count($tasks),
+            'count_quizzes' => count($quizzes),
         ]);
     }
 }

@@ -9,13 +9,13 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-lg-12 col-sm-6">
-                                <div class="card gradient-3">
+                                <div class="card gradient-1">
                                     <div class="card-body">
-                                        <h3 class="card-title text-white">Materi</h3>
+                                        <h3 class="card-title text-white">Kuis</h3>
                                         <div class="d-inline-block">
-                                            <h2 class="text-white">{{ $count_materi }}</h2>
+                                            <h2 class="text-white">{{ $count_quiz }}</h2>
                                         </div>
-                                        <span class="float-right display-5 opacity-5"><i class="fa fa-book"></i></span>
+                                        <span class="float-right display-5 opacity-5"><i class="fa fa-star"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -23,16 +23,16 @@
                         @if(session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                            </button> <b>{{ session('success') }}</b>
+                            </button> {{ session('success') }}
                         </div>
                         @endif
                     </div>
                     <div class="row">
                         <div class="col-lg-10">
-                            <h4>Daftar Materi</h4>
+                            <h4>Daftar Kuis</h4>
                         </div>
                         <div class="col-lg-2">
-                            <a href="/dashboard/materis/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Materi<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
+                            <a href="/dashboard/quizzes/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Kuis<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
                             </a>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-1">#</th>
-                                    <th class="col-md-1">Judul</th>
+                                    <th class="col-md-1">Judul Kuis</th>
                                     <th class="col-md-2">Kelas</th>
                                     <th class="col-md-4">Deskripsi</th>
                                     <th class="col-md-2">Status</th>
@@ -49,35 +49,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($materis as $materi)       
+                                @foreach ($quizzes as $quiz)       
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $materi->title }}</td>
-                                    <td>{{ $materi->name }}</td>
-                                    <td>{{ $materi->description }}
+                                    <td>{{ $quiz->title }}</td>
+                                    <td>{{ $quiz->name }}</td>
+                                    <td>{{ $quiz->description }}</td>
                                     <td>
-                                        <form action="/dashboard/materis/updateStatus" method="post">
+                                        <form action="/dashboard/quizzes/updateStatus" method="post">
                                             @csrf
-                                                @if ( $materi->status == 1)
-                                                    <button type="submit" onclick="return confirm('Apakah anda ingin menonaktifkan materi {{ $materi->title }}?')" class="btn mb-1 btn-rounded btn-success">Aktif</button>
+                                                @if ( $quiz->status == 1)
+                                                    <button type="submit" onclick="return confirm('Apakah anda ingin menonaktifkan tugash : {{ $quiz->title }}?')" class="btn mb-1 btn-rounded btn-success">Aktif</button>
                                                 @else
-                                                    <button type="submit" onclick="return confirm('Apakah anda ingin mengaktifkan materi {{ $materi->title }}?')" class="btn mb-1 btn-rounded btn-danger">Nonaktif</button>
+                                                    <button type="submit" onclick="return confirm('Apakah anda ingin mengaktifkan tugash : {{ $quiz->title }}?')" class="btn mb-1 btn-rounded btn-danger">Nonaktif</button>
                                                 @endif
-                                                <input type="hidden" id="materi_id" name="materi_id" value="{{ $materi->id }}">
+                                                <input type="hidden" id="id" name="id" value="{{ $quiz->id }}">
                                         </form>
                                     </td>
                                     <td> 
                                         <div class="row">
-                                            <a href="/dashboard/materis/{{ $materi->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
+                                            <a href="/dashboard/quizzes/{{ $quiz->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
                                             </a>
 
-                                            <a href="/dashboard/materis/{{ $materi->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
+                                            <a href="/dashboard/quizzes/{{ $quiz->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
                                             </a>
                                             
-                                            <form action="/dashboard/materis/{{ $materi->slug }}" method="post" class="d-inline">
+                                            <form action="/dashboard/quizzes/{{ $quiz->slug }}" method="post" class="d-inline">
                                                 @method('delete')
                                                 @csrf
-                                                <button onclick="return confirm('Apakah anda ingin menghapus materi: {{ $materi->title }}?')" class="btn mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>
+                                                <button onclick="return confirm('Apakah anda ingin menghapus kuis: {{ $quiz->title }}?')" class="btn mb-1 btn-danger ml-2"><i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
                                         </div>

@@ -27,7 +27,8 @@ class MateriController extends Controller
             'rooms.name')
         ->get();
         return view('dashboard.materi.index',[
-            'materis' => $materis
+            'materis' => $materis,
+            'count_materi' => count($materis),
         ]);
     }
 
@@ -65,6 +66,10 @@ class MateriController extends Controller
             'description' => '',
         ]);
         $validateData['status'] = 0;
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
         Materi::create($validateData);
 
         return redirect('dashboard/materis')->with('success', 'Materi: '.$validateData['title'].' telah ditambahkan !');
@@ -119,6 +124,10 @@ class MateriController extends Controller
 
         $validateData =$request->validate($rules);
         $validateData['status'] = 0;
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
 
         Materi::where('id', $materi->id)->update($validateData);
 
@@ -130,7 +139,6 @@ class MateriController extends Controller
     {
         $materi = DB::table('materis')
         ->where('id', '=', $request->materi_id)->first();
-        
         $status = $materi->status;
         if($status == 0){
             $status = 1;

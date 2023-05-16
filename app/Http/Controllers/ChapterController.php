@@ -65,6 +65,10 @@ class ChapterController extends Controller
         }
 
         $validateData['content'] = $validateData['editor'];
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
         
         Chapter::create($validateData);
         
@@ -133,11 +137,13 @@ class ChapterController extends Controller
             throw ValidationException::withMessages(['index' => ['Index has been exists'],]);
         }
 
-       
-
         $validateData = array_replace($validateData, ['content' => $validateData['editor']]);
         unset($validateData['editor']);
-        
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
+
         Chapter::where('id', $chapter->id)->update($validateData);
 
         $materi = DB::table('materis')

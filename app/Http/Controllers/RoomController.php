@@ -16,8 +16,10 @@ class RoomController extends Controller
      */
     public function index()
     {
+        $rooms = Room::where('user_id', auth()->user()->id)->get();
         return view('dashboard.room.index',[
-            'rooms' => Room::where('user_id', auth()->user()->id)->get()
+            'rooms' => $rooms,
+            'count_room' => count($rooms),
         ]);
     }
 
@@ -54,7 +56,11 @@ class RoomController extends Controller
         
         $validateData['code'] = $code;
         $validateData['user_id'] = auth()->user()->id;
-  
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
+
         Room::create($validateData);
 
         return redirect('dashboard/rooms')->with('success', 'Data Kelas: '.$validateData['name'].' telah ditambahkan !');
@@ -104,8 +110,11 @@ class RoomController extends Controller
         }
 
         $validateData =$request->validate($rules);
-
         $validateData['user_id'] = auth()->user()->id;
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
 
         Room::where('id', $room->id)->update($validateData);
 

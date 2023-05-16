@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,8 @@ class TaskController extends Controller
             'rooms.name')
         ->get();
         return view('dashboard.task.index',[
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'count_tasks' => count($tasks),
         ]);
     }
 
@@ -67,6 +69,16 @@ class TaskController extends Controller
         $validateData['status'] = 0;
         $validateData = array_replace($validateData, ['content' => $validateData['editor']]);
         unset($validateData['editor']);
+        
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
+
+        $note = $validateData['note'];
+        if(is_null($note)){
+            $validateData['note'] = '';
+        }
 
         Task::create($validateData);
 
@@ -81,7 +93,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('dashboard.task.show', [
+            'content' => $task->content
+        ]);
     }
 
     /**
@@ -92,7 +106,10 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('dashboard.task.edit', [
+            'task' => $task,
+            'rooms' => Room::where('user_id', auth()->user()->id)->get()
+        ]);
     }
 
     /**
@@ -104,7 +121,38 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $rules = [
+            'title' => 'required|max:255',
+            'slug' => 'required',
+            'editor' => 'required',
+            'deadline' => 'required|date|after:today',
+            'description' => '',
+            'note' => '',
+            'room_id' => 'required',
+        ];
+
+        if($request->slug != $task->slug){
+            $rules['slug'] = 'required|unique:materis';
+        }
+
+        $validateData =$request->validate($rules);
+        $validateData = array_replace($validateData, ['content' => $validateData['editor']]);
+        unset($validateData['editor']);
+        
+        $description = $validateData['description'];
+        if(is_null($description)){
+            $validateData['description'] = '';
+        }
+
+        $note = $validateData['note'];
+        if(is_null($note)){
+            $validateData['note'] = '';
+        }
+
+        Task::where('id', $task->id)->update($validateData);
+
+        return redirect('dashboard/tasks')->with('success', 'Data Kelas: '.$task->title.' telah diperbarui');
+
     }
 
     public function updateStatus(Request $request)

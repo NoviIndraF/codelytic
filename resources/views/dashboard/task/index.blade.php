@@ -8,22 +8,35 @@
                 <div class="card-body">
                     <div class="card-title">
                         <div class="row">
-                            <div class="col-lg-10">
-                                <h4>Daftar Tugas</h4>
-                            </div>
-                            <div class="col-lg-2">
-                                <a href="/dashboard/tasks/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Tugas<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
-                                </a>
+                            <div class="col-lg-12 col-sm-6">
+                                <div class="card gradient-2">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-white">Tugas</h3>
+                                        <div class="d-inline-block">
+                                            <h2 class="text-white">{{ $count_tasks }}</h2>
+                                        </div>
+                                        <span class="float-right display-5 opacity-5"><i class="fa fa-file"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @if(session()->has('success'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                </button> {{ session('success') }}
-                            </div>
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </button>{{ session('success') }}
+                        </div>
                         @endif
                     </div>
-                    <div class="table-responsive mt-4">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <h4>Daftar Tugas</h4>
+                        </div>
+                        <div class="col-lg-2">
+                            <a href="/dashboard/tasks/create" type="submit" class="btn mb-1 mr-5 btn-primary">Tambah Tugas<span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
                         <table class="table table-striped table-bordered zero-configuration">
                             <thead>
                                 <tr>

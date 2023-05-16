@@ -4,6 +4,8 @@ use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MateriController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TaskController;
@@ -52,6 +54,11 @@ Route::get('/dashboard/tasks/checkSlug', [TaskController::class, 'checkSlug'])->
 Route::resource('/dashboard/tasks', TaskController::class)->middleware('auth');
 Route::post('/dashboard/tasks/updateStatus', [TaskController::class, 'updateStatus'])->middleware('auth');
 
+Route::get('/dashboard/quizzes/checkSlug', [QuizController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/quizzes', QuizController::class)->middleware('auth');
+Route::post('/dashboard/quizzes/updateStatus', [QuizController::class, 'updateStatus'])->middleware('auth');
 
+Route::get('/dashboard/questions/checkSlug', [QuestionController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/questions', QuestionController::class)->middleware('auth');
 
 Route::get('/dashboard/test', [TestController::class, 'index'])->middleware('auth');
