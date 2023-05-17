@@ -19,7 +19,7 @@ class RoomFactory extends Factory
             'slug' => $this->faker->slug(),
             'name' => $this->faker->city(),
             'major' => $this->faker->jobTitle(),
-            'description' => $this->faker->paragraph(mt_rand(null,1)),// password
+            'description' => $this->faker->paragraph(mt_rand(1,2)),// password
             'user_id' => rand(1, 3),
         ];
     }

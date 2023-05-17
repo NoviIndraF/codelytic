@@ -16,11 +16,10 @@ class CreateChaptersTable extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('index');
+            $table->string('index') ;
             $table->string('title');
             $table->string('description');
             $table->string('content');
-            $table->string('status');
             $table->foreignId('materi_id');
             $table->timestamps();
         });

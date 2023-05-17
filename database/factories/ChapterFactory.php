@@ -17,9 +17,8 @@ class ChapterFactory extends Factory
             'slug' => $this->faker->slug(),
             'index' => rand(1, 5),
             'title' => $this->faker->title(),
-            'content' => $this->faker->paragraph(mt_rand(null, 2)),
-            'description' => $this->faker->paragraph(mt_rand(null, 1)),
-            'status' => rand(1, 3),// password
+            'content' => $this->faker->paragraph(mt_rand(1, 2)),
+            'description' => $this->faker->paragraph(mt_rand(1, 2)),
             'materi_id' => rand(1, 5),
         ];
     }

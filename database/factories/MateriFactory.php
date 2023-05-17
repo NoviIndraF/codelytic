@@ -16,9 +16,8 @@ class MateriFactory extends Factory
         return [
             'slug' => $this->faker->slug(),
             'title' => $this->faker->country(),
-            'created' => $this->faker->date(),
-            'description' => $this->faker->paragraph(mt_rand(null, 1)),
-            'status' => rand(1, 3),// password
+            'description' => $this->faker->paragraph(mt_rand(1, 2)),
+            'status' => rand(1, 2),// password
             'room_id' => rand(1, 3),
         ];
     }

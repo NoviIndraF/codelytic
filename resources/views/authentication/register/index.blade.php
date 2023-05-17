@@ -72,38 +72,6 @@
                                 </div>
                                 <button class="btn login-form__btn submit w-100" type="submit">Register</button>
                             </form>
-                                {{-- <div class="form-group">
-                                    <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" required value="{{ old('name') }}">
-                                </div>
-                                @error('name') 
-                                <span class="text-danger">*</span>
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                                <div class="form-group">
-                                    <input id="username" name="username" type="text" class="form-control  @error('username') is-invalid @enderror" placeholder="Username" required value="{{ old('username') }}">
-                                </div>
-                                @error('username') 
-                                <span class="text-danger">* 
-                                    {{ $message }}
-                                </span>
-                                @enderror
-                                <div class="form-group">
-                                    <input id="email" name="email" type="email" class="form-control  @error('email') is-invalid @enderror" placeholder="Email" required value="{{ old('email') }}">
-                                </div>
-                                @error('email') 
-                                <h6 class="text-danger">* 
-                                    {{ $message }}
-                                </h6>
-                                @enderror
-                                <div class="form-group">
-                                    <input id="password" name="password" type="password" class="form-control  @error('password') is-invalid @enderror" placeholder="Password" required>
-                                </div>
-                                @error('password') 
-                                <span class="text-danger">* 
-                                    {{ $message }}
-                                </span>
-                                @enderror --}}
                                 <p class="mt-5 login-form__footer">Have account <a href="/login" class="text-primary">Login</a> now</p>
                                 </p>
                             </div>
