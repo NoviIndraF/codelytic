@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Room;
+use App\Models\User;
+use App\Models\Materi;
+use App\Models\Chapter;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,9 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(3)->create();
-        \App\Models\Materi::factory(5)->create();
-        \App\Models\Chapter::factory(10)->create();
-        \App\Models\Room::factory(3)->create();
+        User::factory(3)->create();
+        Materi::factory(5)->create();
+        Chapter::factory(10)->create();
+        Room::factory(3)->create();
+        Student::factory(6)->create();
     }
 }
