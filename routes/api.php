@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentRoomController;
+use App\Models\Student;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group( function() {
+    Route::post('getAll', [StudentController::class, 'getAll']);
+    Route::post('getAllData', [StudentRoomController::class, 'getAllData']);
     Route::post('logout', [StudentController::class, 'logout']);
 });

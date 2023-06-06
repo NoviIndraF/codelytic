@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Materi;
 use App\Models\Chapter;
 use App\Models\Student;
+use App\Models\StudentRoom;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         Chapter::factory(10)->create();
         Room::factory(3)->create();
         Student::factory(6)->create();
+        StudentRoom::factory(5)->create();
     }
 }

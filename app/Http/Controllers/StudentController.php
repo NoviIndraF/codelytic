@@ -20,8 +20,41 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function login(Request $request)
+    public function getAll(Request $request)
     {
+         $student = Student::with(['student_room.room.materi', 'student_room.room'])->where('id', Auth::user()->id)->get();
+$roomId = 'pHOLOZ';
+ return ResponseFormatter::success(
+    $student,
+                    'Data produk  ada',
+                    200
+                );
+        if ($student) {
+            $filteredStudentRooms = $student->student_room->filter(function ($student_room) use ($roomId) {
+                return $student_room->room_id == $roomId;
+            });
+
+            if ($filteredStudentRooms->isNotEmpty()) {
+                $student_room = $filteredStudentRooms->first();
+                $room = $student_room->room;
+
+
+                return response()->json([
+                    'student' => $student,
+                    'room' => $room,
+                    'materis' => $room->materis
+                ]);
+
+                return ResponseFormatter::success(
+                    null,
+                    'Data produk tidak ada',
+                    404
+                );
+            }
+        }
+    }
+       //  $data = Student::with(['student_room'])->where('id', Auth::user()->id)->get();
+public function login(Request $request){
         try {
             $request->validate([
                 'email' => 'email|required',
