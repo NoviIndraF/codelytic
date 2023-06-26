@@ -43,6 +43,7 @@
                                     <th class="col-md-1">#</th>
                                     <th class="col-md-1">Judul Kuis</th>
                                     <th class="col-md-2">Kelas</th>
+                                    <th>Level</th>
                                     <th class="col-md-4">Deskripsi</th>
                                     <th class="col-md-2">Status</th>
                                     <th class="col-md-2">Action</th>
@@ -54,6 +55,14 @@
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $quiz->title }}</td>
                                     <td>{{ $quiz->name }}</td>
+                                    <td>
+                                        @if ( $quiz->level == 1)Mudah
+                                        @elseif ( $quiz->level == 2)Normal
+                                        @elseif ( $quiz->level == 3)Sulit
+                                        @elseif ( $quiz->level == 4)Expert
+                                        @else
+                                        @endif
+                                    </td>
                                     <td>{{ $quiz->description }}</td>
                                     <td>
                                         <form action="/dashboard/quizzes/updateStatus" method="post">

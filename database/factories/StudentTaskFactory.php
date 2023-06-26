@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-class QuizFactory extends Factory
+class StudentTaskFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,11 +15,10 @@ class QuizFactory extends Factory
     public function definition()
     {
         return [
-            'slug' => $this->faker->slug(),
-            'title' => $this->faker->title(),
-            'description' => $this->faker->paragraph(mt_rand(1, 2)),
-            'level' => rand(2, 5),
-            'status' => rand(1, 2),
+            'answer' => $this->faker->paragraph(mt_rand(1, 2)),
+            'student_id' => rand(1, 3),
+            'sended' => $this->faker->date('now'),
+            'task_id' => rand(1, 3),
             'room_id' => rand(1, 3),
         ];
     }

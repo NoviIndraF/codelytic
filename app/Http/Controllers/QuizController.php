@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use App\Models\Room;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 
 class QuizController extends Controller
 {
@@ -62,7 +63,8 @@ class QuizController extends Controller
             'title' => 'required|max:255',
             'slug' => 'required|unique:rooms',
             'room_id' => 'required',
-            'description' => '',
+            'level' => 'required',
+            'description' => 'max:255',
         ]);
         $validateData['status'] = 0;
         $description = $validateData['description'];
@@ -114,8 +116,10 @@ class QuizController extends Controller
     {
         $rules = [
             'title' => 'required|max:255',
+            'level' => 'required',
             'room_id' => 'required',
-            'description' => '',
+            'status' => 'required',
+            'description' => 'max:255',
         ];
 
         if($request->slug != $quiz->slug){
@@ -123,7 +127,6 @@ class QuizController extends Controller
         }
 
         $validateData =$request->validate($rules);
-        $validateData['status'] = 0;
         $description = $validateData['description'];
         if(is_null($description)){
             $validateData['description'] = '';
@@ -175,4 +178,51 @@ class QuizController extends Controller
         $slug = SlugService::createSlug(Quiz::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
     }
+
+    // API
+    public function getQuizByRoomId(Request $request){
+        $room_id = $request->room_id;
+        $quiz = Room::where('id',$room_id)
+        ->with(['quiz' => function ($query) {
+            $query->where('status', 1)
+            ->with('question');
+        }])
+        ->first();
+
+        if($quiz){
+            return ResponseFormatter::success(
+                $quiz,
+                'Data Kuis Room berhasil dapatkan'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Kuiz Room Student tidak ada',
+                404
+            );
+        }
+    }
+
+    public function getQuizzesByLevelAndRoomId(Request $request){
+    $level = $request->level;
+    $roomId= $request->room_id;
+        $quizzes = Quiz::where('level', $level)
+        ->where('status', 1)
+        ->where('room_id', $roomId)
+        ->with('question')
+        ->get();
+
+    if($quizzes){
+        return ResponseFormatter::success(
+            $quizzes,
+            'Data Kuis Room berhasil dapatkan'
+        );
+    } else{
+        return ResponseFormatter::success(
+            null,
+            'Data Kuis Room Student tidak ada',
+            404
+        );
+    }
+}
 }

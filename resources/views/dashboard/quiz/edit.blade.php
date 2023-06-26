@@ -55,10 +55,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label" for="index">Level Kesulitan <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-2">
+                                <select class="form-control" name="level">
+                                    <option value="1" @if (old('level', $quiz->level) == 1) selected @endif>Mudah</option>
+                                    <option value="2" @if (old('level', $quiz->level) == 2) selected @endif>Normal</option>
+                                    <option value="3" @if (old('level', $quiz->level) == 3) selected @endif>Sulit</option>
+                                    <option value="4" @if (old('level', $quiz->level) == 4) selected @endif>Expert</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label" for="description">Deskripsi/catatan
                             </label>
                             <div class="col-lg-8">
                                 <input type="text" class="form-control input-default" id="description" name="description" placeholder="Deskripsi Kuis..." value="{{ old('description', $quiz->description) }}">
+                                <input type="hidden" class="form-control input-default" id="status" name="status" value="{{ old('status', $quiz->status) }}">
                                 @error('description') 
                                     <h6 class="text-danger">* 
                                         {{ $message }}

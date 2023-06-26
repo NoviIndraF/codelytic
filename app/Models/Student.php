@@ -48,8 +48,19 @@ class Student extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function student_quiz()
+    {
+        return $this->hasMany(StudentQuiz::class);
+    }
+
     public function student_room()
     {
         return $this->hasMany(StudentRoom::class);
     }
+
+    public function student_task()
+    {
+        return $this->hasMany(StudentTask::class);
+    }
+    
 }

@@ -66,6 +66,18 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label" for="index">Level Kesulitan <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-2">
+                            <select class="form-control" name="level">
+                                <option value="1" selected>Mudah</option>
+                                <option value="2" >Normal</option>
+                                <option value="3" >Sulit</option>
+                                <option value="4" >Expert</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-lg-3"></div>
                             <div class="col-lg-8">
                                 <button class="btn login-form__btn submit" type="submit">Tambah Kuis</button>

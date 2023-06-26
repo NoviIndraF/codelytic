@@ -3,33 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentRoom;
-use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class StudentRoomController extends Controller
 {
-    public function getAllData()
+    public function getStudentRoom()
     {
-        $data = Room::with(['materi'])->where('code','pHOLOZ')->get();
+        $studentId = auth()->user()->id;
+        $data = StudentRoom::where('student_id', $studentId)->with('room')->get();
 
         if($data){
             return ResponseFormatter::success(
                 $data,
-                'Data produk berhasil dipanggil'
+                'Data Room Student berhasil dipanggil'
             );
         } else{
             return ResponseFormatter::success(
                 null,
-                'Data produk tidak ada',
+                'Data Room Student tidak ada',
+                404
+            );
+        }
+    }
+
+    public function getAllData()
+    {
+        $data = StudentRoom::where('student_id', auth()->user()->id)->get();
+
+        if($data){
+            return ResponseFormatter::success(
+                $data,
+                'Data Room Student berhasil dipanggil'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Room Student tidak ada',
                 404
             );
         }
 
         return ResponseFormatter::success(
             $data,
-            'Data produk berhasil diambil'
+            'Data Room Student berhasil diambil'
         );
     }
 
@@ -51,7 +69,38 @@ class StudentRoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            
+            $studentId = auth()->user()->id;
+            $request->request->add([
+                'student_id' => $studentId,
+            ]);
+
+            $request -> validate(
+            [
+                'student_id' => ['required'],
+                'code' => ['required', 'string'],
+                'room_id' => ['required'],
+                ]
+            );
+
+            StudentRoom::create([
+                'student_id' => $request->student_id,
+                'code' =>$request->code,
+                'room_id' => $request->room_id,
+            ]);
+
+            return ResponseFormatter::success([
+                'room_id' => $request->room_id,
+            ], 'Room Registered');
+
+        } catch (Exception $error) {
+            return ResponseFormatter::error([
+                'message' => 'Something went error',
+                'error' => $error
+            ], 'Auth Class Failed, 500');
+    
+        }
     }
 
     /**

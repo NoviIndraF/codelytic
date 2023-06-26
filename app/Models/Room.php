@@ -26,9 +26,24 @@ class Room extends Model
         return $this->hasMany(Materi::class);
     }
 
+    public function quiz()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
     public function student_room()
     {
         return $this->hasMany(StudentRoom::class);
+    }
+
+    public function student_task()
+    {
+        return $this->hasMany(StudentTask::class);
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
     }
 
     public function getRouteKeyName()

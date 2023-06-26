@@ -155,4 +155,13 @@ class QuestionController extends Controller
         $slug = SlugService::createSlug(Question::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
     }
+
+    // API
+    public function showQuestion(Request $request)
+    {
+        $content = $request->content;
+        return view('api.chapter.show', [
+            'content' => $content
+        ]);
+    }
 }
