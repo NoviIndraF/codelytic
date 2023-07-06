@@ -47,9 +47,10 @@
                         <thead>
                             <tr>
                                 <th class="col-sm-1">#</th>
-                                <th class="col-md-1">Judul</th>
-                                <th class="col-md-2">Deskripsi</th>
-                                <th class="col-md-4">Pertanyaan</th>
+                                <th class="col-md-3">Judul</th>
+                                <th class="col-md-4">Deskripsi</th>
+                                <th class="col-md-2">Pertanyaan</th>
+                                <th class="col-md-2">Jawaban</th>
                                 <th class="col-md-2">Action</th>
                             </tr>
                         </thead>
@@ -59,11 +60,12 @@
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $question->title }}</td>
                                 <td>{{ $question->description }}</td>
-                                <td>{{ $question->content }}</td>
+                                <td>
+                                    <a href="/dashboard/questions/{{ $question->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
+                                    </a></td>
+                                    <td>{{ $question->answer_correct }}</td>
                                 <td> 
                                     <div class="row">
-                                        <a href="/dashboard/questions/{{ $question->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
-                                        </a>
 
                                         <a href="/dashboard/questions/{{ $question->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
                                         </a>

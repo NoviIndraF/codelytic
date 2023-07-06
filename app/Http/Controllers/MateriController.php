@@ -6,6 +6,7 @@ use App\Models\Chapter;
 use App\Models\Materi;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -18,13 +19,10 @@ class MateriController extends Controller
      */
     public function index()
     {
-        $materis = DB::table('materis')
-        ->join('rooms', 'rooms.id', '=', 'materis.room_id')
-        ->join('users', 'users.id', '=', 'rooms.user_id')
-        ->where('users.id', '=', auth()->user()->id)
-        ->select(
-            'materis.*', 
-            'rooms.name')
+        $materis = Materi::with('room')
+        ->whereHas('room.user', function ($query) {
+            $query->where('id', auth()->user()->id);
+        })->with('chapter')
         ->get();
         return view('dashboard.materi.index',[
             'materis' => $materis,
@@ -63,7 +61,7 @@ class MateriController extends Controller
             'title' => 'required|max:255',
             'slug' => 'required|unique:rooms',
             'room_id' => 'required',
-            'description' => '',
+            'description' => 'max:255',
         ]);
         $validateData['status'] = 0;
         $description = $validateData['description'];
@@ -115,7 +113,8 @@ class MateriController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'room_id' => 'required',
-            'description' => '',
+            'status' => 'required',
+            'description' => 'max:255',
         ];
 
         if($request->slug != $materi->slug){
@@ -123,7 +122,6 @@ class MateriController extends Controller
         }
 
         $validateData =$request->validate($rules);
-        $validateData['status'] = 0;
         $description = $validateData['description'];
         if(is_null($description)){
             $validateData['description'] = '';
@@ -173,5 +171,29 @@ class MateriController extends Controller
     public function checkSlug(Request $request){
         $slug = SlugService::createSlug(Materi::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
+    }
+
+    // API
+
+    public function getMateriByRoomId(Request $request){
+        $room_id = $request->room_id;
+        $materi = Room::where('id',$room_id)
+        ->with(['materi' => function ($query) {
+            $query->where('status', 1);
+        }])
+        ->first();
+
+        if($materi){
+            return ResponseFormatter::success(
+                $materi,
+                'Data Materi Room berhasil dipanggil'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Materi Room Student tidak ada',
+                404
+            );
+        }
     }
 }

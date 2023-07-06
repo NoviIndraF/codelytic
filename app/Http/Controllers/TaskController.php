@@ -7,6 +7,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\ResponseFormatter;
 
 class TaskController extends Controller
 {
@@ -17,14 +18,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = DB::table('tasks')
-        ->join('rooms', 'rooms.id', '=', 'tasks.room_id')
-        ->join('users', 'users.id', '=', 'rooms.user_id')
-        ->where('users.id', '=', auth()->user()->id)
-        ->select(
-            'tasks.*', 
-            'rooms.name')
+        $user = auth()->user();
+        $tasks = Task::with(['room', 'student_task'])
+        ->whereHas('room.user', function ($query) {
+            $query->where('id', auth()->user()->id);
+        })
+        ->with('student_task')
         ->get();
+    
+    
         return view('dashboard.task.index',[
             'tasks' => $tasks,
             'count_tasks' => count($tasks),
@@ -64,7 +66,7 @@ class TaskController extends Controller
             'room_id' => 'required',
             'editor' => 'required',
             'note' => '',
-            'description' => '',
+            'description' => 'max:255',
         ]);
         $validateData['status'] = 0;
         $validateData = array_replace($validateData, ['content' => $validateData['editor']]);
@@ -93,8 +95,20 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('dashboard.task.show', [
-            'content' => $task->content
+        $task = Task::where('id', $task->id)
+        ->where('room_id', $task->room_id)
+        ->with('student_task.student')->first();
+        return view('dashboard.task.show',[
+            'task' => $task,
+            'studentsTask'=> $task->student_task
+        ]);
+    }
+
+    public function showContent(Request $request)
+    {
+        $content = $request->content;
+        return view('dashboard.task.show_content', [
+            'content' => $content
         ]);
     }
 
@@ -126,7 +140,7 @@ class TaskController extends Controller
             'slug' => 'required',
             'editor' => 'required',
             'deadline' => 'required|date|after:today',
-            'description' => '',
+            'description' => 'max:255',
             'note' => '',
             'room_id' => 'required',
         ];
@@ -194,5 +208,36 @@ class TaskController extends Controller
     public function checkSlug(Request $request){
         $slug = SlugService::createSlug(Task::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
+    }
+
+    // API
+    public function getTaskByRoomId(Request $request){
+        $room_id = $request->room_id;
+        $task = Room::where('id',$room_id)
+        ->with(['task' => function ($query) {
+            $query->where('status', 1);
+        }])
+        ->first();
+
+        if($task){
+            return ResponseFormatter::success(
+                $task,
+                'Data Tugas berhasil dipanggil'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Tugas tidak ada',
+                404
+            );
+        }
+    }
+
+    public function showTask(Request $request)
+    {
+        $content = $request->content;
+        return view('api.chapter.show', [
+            'content' => $content
+        ]);
     }
 }

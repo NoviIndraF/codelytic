@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseFormatter;
 use App\Models\Chapter;
 use App\Models\Materi;
-use App\Http\Requests\StoreChapterRequest;
-use App\Http\Requests\UpdateChapterRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Session;
 use App\Models\Messages;
 
 class ChapterController extends Controller
@@ -213,5 +211,34 @@ class ChapterController extends Controller
     public function checkSlug(Request $request){
         $slug = SlugService::createSlug(Chapter::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
+    }
+
+    // API
+    public function getChapterByMateriId(Request $request){
+        $materi_id = $request->materi_id;
+        $materi = Materi::where('id', $materi_id)
+        ->with('chapter' )
+        ->first();
+
+        if($materi){
+            return ResponseFormatter::success(
+                $materi,
+                'Data Materi Room berhasil dipanggil'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Materi Room Student tidak ada',
+                404
+            );
+        }
+    }
+
+    public function showChapter(Request $request)
+    {
+        $content = $request->content;
+        return view('api.chapter.show', [
+            'content' => $content
+        ]);
     }
 }

@@ -64,6 +64,8 @@
                                         {{ $message }}
                                     </h6>
                                 @enderror
+                                <input type="hidden" class="form-control input-default" id="status" name="status" value="{{ old('status', $materi->status) }}">
+                            
                             </div>
                         </div>
                         <div class="form-group row">

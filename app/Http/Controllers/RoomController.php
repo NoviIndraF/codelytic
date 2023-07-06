@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\Materi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
+use App\Models\StudentRoom;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class RoomController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +20,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::where('user_id', auth()->user()->id)->get();
+        $rooms = Room::where('user_id', auth()->user()->id)->with('student_room')->get();
         return view('dashboard.room.index',[
-            'rooms' => $rooms,
-            'count_room' => count($rooms),
+            'rooms' => $rooms
         ]);
     }
 
@@ -47,7 +50,7 @@ class RoomController extends Controller
             'name' => 'required|max:255',
             'slug' => 'required|unique:rooms',
             'major' => 'required|max:255',
-            'description' => '',
+            'description' => 'max:255',
         ]);
 
         while(Room::where('code', '=', $code)->exists()){
@@ -74,7 +77,13 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        $room = Room::where('id', $room->id)
+        ->where('user_id', auth()->user()->id)
+        ->with('student_room.student')->first();
+        return view('dashboard.room.show',[
+            'room' => $room,
+            'studentsRoom'=> $room->student_room
+        ]);
     }
 
     /**
@@ -102,7 +111,7 @@ class RoomController extends Controller
         $rules = [
             'name' => 'required|max:255',
             'major' => 'required|max:255',
-            'description' => '',
+            'description' => 'max:255',
         ];
 
         if($request->slug != $room->slug){
@@ -137,5 +146,42 @@ class RoomController extends Controller
     public function checkSlug(Request $request){
         $slug = SlugService::createSlug(Room::class, 'slug', $request->name);
         return response()->json(['slug' => $slug]);
+    }
+
+    // API
+    public function getRoomByCode(Request $request){
+        $code = $request->code;
+        $room = Room::where('code',$code)->first();
+
+        if($room){
+            return ResponseFormatter::success(
+                $room,
+                'Data Room berhasil dipanggil'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Room tidak ada',
+                404
+            );
+        }
+    }
+
+    public function getRoomById(Request $request){
+        $room_id = $request->room_id;
+        $room = Room::find($room_id);
+
+        if($room){
+            return ResponseFormatter::success(
+                $room,
+                'Data Room berhasil dipanggil'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Room tidak ada',
+                404
+            );
+        }
     }
 }

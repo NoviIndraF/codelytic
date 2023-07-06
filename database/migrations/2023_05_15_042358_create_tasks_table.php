@@ -21,7 +21,7 @@ class CreateTasksTable extends Migration
             $table->string('note') ;
             $table->string('content');
             $table->string('deadline');
-            $table->string('status');
+            $table->integer('status');
             $table->foreignId('room_id');
             $table->timestamps();
         });

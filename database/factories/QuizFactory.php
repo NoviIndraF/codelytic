@@ -17,7 +17,8 @@ class QuizFactory extends Factory
             'slug' => $this->faker->slug(),
             'title' => $this->faker->title(),
             'description' => $this->faker->paragraph(mt_rand(1, 2)),
-            'status' => rand(1, 2),// password
+            'level' => rand(2, 5),
+            'status' => rand(1, 2),
             'room_id' => rand(1, 3),
         ];
     }

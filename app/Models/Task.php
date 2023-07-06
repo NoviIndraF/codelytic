@@ -20,6 +20,11 @@ class Task extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function student_task()
+    {
+        return $this->hasMany(StudentTask::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
