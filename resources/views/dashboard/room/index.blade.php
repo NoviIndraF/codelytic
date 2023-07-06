@@ -13,7 +13,7 @@
                                     <div class="card-body">
                                         <h3 class="card-title text-white">Kelas</h3>
                                         <div class="d-inline-block">
-                                            <h2 class="text-white">{{ $count_room }}</h2>
+                                            <h2 class="text-white">{{ $rooms->count() }}</h2>
                                         </div>
                                         <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                                     </div>
@@ -45,6 +45,7 @@
                                     <th class="col-md-2">Name</th>
                                     <th class="col-md-2">Jurusan</th>
                                     <th class="col-md-4">Deskripsi</th>
+                                    <th class="col-md-1">Jumlah Siswa</th>
                                     <th class="col-md-2">Action</th>
                                 </tr>
                             </thead>
@@ -56,6 +57,9 @@
                                     <td>{{ $room->name }}</td>
                                     <td>{{ $room->major }}</td>
                                     <td>{{ $room->description }}</td>
+                                    <td>
+                                        <a href="/dashboard/rooms/{{ $room->slug }}" class="btn mb-1 btn-primary ml-2">{{ $room->student_room->count() }} <i class="fa fa-eye"></i>
+                                        </a></td>
                                     <td> 
                                         <div class="row">
                                             <a href="/dashboard/rooms/{{ $room->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>

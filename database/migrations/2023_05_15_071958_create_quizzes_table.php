@@ -18,8 +18,8 @@ class CreateQuizzesTable extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->string('description');
-            $table->int('level');
-            $table->string('status');
+            $table->integer('level');
+            $table->integer('status');
             $table->foreignId('room_id');
             $table->timestamps();
         });

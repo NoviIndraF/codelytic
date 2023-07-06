@@ -47,9 +47,9 @@
                         <thead>
                             <tr>
                                 <th class="col-sm-1">#</th>
-                                <th class="col-md-1">Judul</th>
-                                <th class="col-md-2">Deskripsi</th>
-                                <th class="col-md-4">Isi Materi</th>
+                                <th class="col-md-3">Judul</th>
+                                <th class="col-md-4">Deskripsi</th>
+                                <th class="col-md-2">Isi Materi</th>
                                 <th class="col-sm-1">Urutan</th>
                                 <th class="col-md-2">Action</th>
                             </tr>
@@ -60,12 +60,12 @@
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $chapter->title }}</td>
                                 <td>{{ $chapter->description }}</td>
-                                <td>{{ $chapter->content }}</td>
+                                <td><a href="/dashboard/chapters/{{ $chapter->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
+                                </a></td>
                                 <td>{{ $chapter->index }}</td>
                                 <td> 
                                     <div class="row">
-                                        <a href="/dashboard/chapters/{{ $chapter->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
-                                        </a>
+
 
                                         <a href="/dashboard/chapters/{{ $chapter->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
                                         </a>

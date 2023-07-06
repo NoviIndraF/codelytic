@@ -18,14 +18,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = DB::table('tasks')
-        ->join('rooms', 'rooms.id', '=', 'tasks.room_id')
-        ->join('users', 'users.id', '=', 'rooms.user_id')
-        ->where('users.id', '=', auth()->user()->id)
-        ->select(
-            'tasks.*', 
-            'rooms.name')
+        $user = auth()->user();
+        $tasks = Task::with(['room', 'student_task'])
+        ->whereHas('room.user', function ($query) {
+            $query->where('id', auth()->user()->id);
+        })
+        ->with('student_task')
         ->get();
+    
+    
         return view('dashboard.task.index',[
             'tasks' => $tasks,
             'count_tasks' => count($tasks),
@@ -94,8 +95,20 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('dashboard.task.show', [
-            'content' => $task->content
+        $task = Task::where('id', $task->id)
+        ->where('room_id', $task->room_id)
+        ->with('student_task.student')->first();
+        return view('dashboard.task.show',[
+            'task' => $task,
+            'studentsTask'=> $task->student_task
+        ]);
+    }
+
+    public function showContent(Request $request)
+    {
+        $content = $request->content;
+        return view('dashboard.task.show_content', [
+            'content' => $content
         ]);
     }
 

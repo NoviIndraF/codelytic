@@ -7,6 +7,7 @@ use App\Models\Materi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
+use App\Models\StudentRoom;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class RoomController extends Controller
@@ -19,10 +20,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::where('user_id', auth()->user()->id)->get();
+        $rooms = Room::where('user_id', auth()->user()->id)->with('student_room')->get();
         return view('dashboard.room.index',[
-            'rooms' => $rooms,
-            'count_room' => count($rooms),
+            'rooms' => $rooms
         ]);
     }
 
@@ -77,7 +77,13 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        $room = Room::where('id', $room->id)
+        ->where('user_id', auth()->user()->id)
+        ->with('student_room.student')->first();
+        return view('dashboard.room.show',[
+            'room' => $room,
+            'studentsRoom'=> $room->student_room
+        ]);
     }
 
     /**

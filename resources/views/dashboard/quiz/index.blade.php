@@ -45,6 +45,8 @@
                                     <th class="col-md-2">Kelas</th>
                                     <th>Level</th>
                                     <th class="col-md-4">Deskripsi</th>
+                                    <th class="col-md-1">Jumlah Pertanyaan</th>
+                                    <th class="col-md-2">Jumlah Siswa Mengisi Kuis</th>
                                     <th class="col-md-2">Status</th>
                                     <th class="col-md-2">Action</th>
                                 </tr>
@@ -54,7 +56,7 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $quiz->title }}</td>
-                                    <td>{{ $quiz->name }}</td>
+                                    <td>{{ $quiz->room->name }}</td>
                                     <td>
                                         @if ( $quiz->level == 1)Mudah
                                         @elseif ( $quiz->level == 2)Normal
@@ -64,6 +66,21 @@
                                         @endif
                                     </td>
                                     <td>{{ $quiz->description }}</td>
+                                    <td>{{ $quiz->question->count() }}</td>
+                                    <td>
+                                        <div class="row justify-content-center align-items-center">
+                                            <div>
+                                               </div>
+                                                <div>
+                                                    <form action="/dashboard/quizzes/showStudentQuiz" method="post">
+                                                        @csrf
+                                                                <button type="submit" class="btn mb-1 btn-primary ml-2"> {{ $quiz->student_quiz->count() }}    <i class="fa fa-eye"></i></button>
+                                                                <input type="hidden" id="id" name="id" value="{{ $quiz->id }}">
+                                                    </form>
+                                                </div>
+                                       
+                                        </div>
+                                    </td>
                                     <td>
                                         <form action="/dashboard/quizzes/updateStatus" method="post">
                                             @csrf

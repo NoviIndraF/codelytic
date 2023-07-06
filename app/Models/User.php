@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Room::class);
     }
+
+    public function student_group_comment()
+    {
+        return $this->hasMany(StudentGroupComment::class);
+    }
 }

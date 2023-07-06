@@ -19,13 +19,10 @@ class MateriController extends Controller
      */
     public function index()
     {
-        $materis = DB::table('materis')
-        ->join('rooms', 'rooms.id', '=', 'materis.room_id')
-        ->join('users', 'users.id', '=', 'rooms.user_id')
-        ->where('users.id', '=', auth()->user()->id)
-        ->select(
-            'materis.*', 
-            'rooms.name')
+        $materis = Materi::with('room')
+        ->whereHas('room.user', function ($query) {
+            $query->where('id', auth()->user()->id);
+        })->with('chapter')
         ->get();
         return view('dashboard.materi.index',[
             'materis' => $materis,

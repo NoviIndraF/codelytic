@@ -44,6 +44,7 @@
                                     <th class="col-md-1">Judul</th>
                                     <th class="col-md-2">Kelas</th>
                                     <th class="col-md-4">Deskripsi</th>
+                                    <th class="col-md-1">Jumlah Konten</th>
                                     <th class="col-md-2">Status</th>
                                     <th class="col-md-2">Action</th>
                                 </tr>
@@ -53,8 +54,9 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $materi->title }}</td>
-                                    <td>{{ $materi->name }}</td>
-                                    <td>{{ $materi->description }}
+                                    <td>{{ $materi->room->name }}</td>
+                                    <td>{{ $materi->description }}</td>
+                                    <td>{{ $materi->chapter->count() }}</td>
                                     <td>
                                         <form action="/dashboard/materis/updateStatus" method="post">
                                             @csrf

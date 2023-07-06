@@ -31,7 +31,7 @@
                 </a aria-expanded="false">
             </li>
             <li>
-                <a class="has-arrow" href="/dashboard/discuss" aria-expanded="false">
+                <a class="has-arrow" href="/dashboard/discussions" aria-expanded="false">
                     <i class="icon-graph menu-icon"></i><span class="nav-text">Diskusi</span>
                 </a aria-expanded="false">
             </li>

@@ -9,6 +9,7 @@ use App\Models\Room;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
+use App\Models\StudentQuiz;
 
 class QuizController extends Controller
 {
@@ -19,13 +20,11 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = DB::table('quizzes')
-        ->join('rooms', 'rooms.id', '=', 'quizzes.room_id')
-        ->join('users', 'users.id', '=', 'rooms.user_id')
-        ->where('users.id', '=', auth()->user()->id)
-        ->select(
-            'quizzes.*', 
-            'rooms.name')
+        $quizzes = Quiz::with('room')
+        ->whereHas('room.user', function ($query) {
+            $query->where('id', auth()->user()->id);
+        })
+        ->with('student_quiz')
         ->get();
         return view('dashboard.quiz.index',[
             'quizzes' => $quizzes,
@@ -88,6 +87,29 @@ class QuizController extends Controller
         return view('dashboard.quiz.show',[
             'quiz' => $quiz,
             'questions' => Question::where('quiz_id', $quiz->id)->get()
+        ]);
+    }
+
+    public function showStudentQuiz(Request $request)
+    {
+        $studentsQuiz = Quiz::where('id', $request->id)
+        ->with('student_quiz')
+        ->first();
+        return view('dashboard.quiz.show_student_quiz',[
+            'quiz' => $studentsQuiz,
+            'studentsQuiz'=> $studentsQuiz->student_quiz
+        ]);
+    }
+
+    public function showStudentDetailQuiz(Request $request)
+    {
+        $studentsQuiz = StudentQuiz::
+        where('student_id', $request->student_id)
+        ->where('quiz_id', $request->id)
+        ->with('student')
+        ->get();
+        return view('dashboard.quiz.show_student_detail_quiz',[
+            'studentsQuiz'=> $studentsQuiz
         ]);
     }
 

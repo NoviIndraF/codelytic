@@ -26,6 +26,11 @@ class Quiz extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function student_quiz()
+    {
+        return $this->hasMany(StudentQuiz::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

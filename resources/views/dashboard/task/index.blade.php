@@ -46,6 +46,8 @@
                                     <th>Deskripsi</th>
                                     <th>Note</th>
                                     <th>Deadline</th>
+                                    <th>Konten</th>
+                                    <th>Jumlah Siswa Mengumpulkan Tugas</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -55,10 +57,19 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $task->title }}</td>
-                                    <td>{{ $task->name }}</td>
+                                    <td>{{ $task->room->name }}</td>
                                     <td>{{ $task->description }}</td>
                                     <td>{{ $task->note }}</td>
                                     <td>{{ $task->deadline }}</td>
+                                    <td>
+                                        <form action="/dashboard/tasks/show_content" method="post">
+                                            @csrf
+                                                    <button type="submit" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i></button>
+                                                    <input type="hidden" id="content" name="content" value="{{ $task->content }}">
+                                        </form>
+                                    </a></td>
+                                    <td> <a href="/dashboard/tasks/{{ $task->slug }}" class="btn mb-1 btn-primary ml-2">{{ $task->student_task->count() }} <i class="fa fa-eye"></i>
+                                    </a></td>
                                     <td>
                                         <form action="/dashboard/tasks/updateStatus" method="post">
                                             @csrf
@@ -72,9 +83,6 @@
                                     </td>
                                     <td> 
                                         <div class="row">
-                                            <a href="/dashboard/tasks/{{ $task->slug }}" class="btn mb-1 btn-primary ml-2"><i class="fa fa-eye"></i>
-                                            </a>
-
                                             <a href="/dashboard/tasks/{{ $task->slug }}/edit" class="btn mb-1 btn-warning ml-2"><i class="fa fa-edit"></i>
                                             </a>
                                             

@@ -18,7 +18,7 @@ class CreateMaterisTable extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->string('description');
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
             $table->foreignId('room_id');
         });

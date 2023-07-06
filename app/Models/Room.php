@@ -21,6 +21,11 @@ class Room extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function discussion()
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
     public function materi()
     {
         return $this->hasMany(Materi::class);
@@ -29,6 +34,11 @@ class Room extends Model
     public function quiz()
     {
         return $this->hasMany(Quiz::class);
+    }
+
+    public function student_discussion_group()
+    {
+        return $this->hasMany(StudentDiscussionGroup::class);
     }
 
     public function student_room()
