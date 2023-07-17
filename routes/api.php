@@ -72,6 +72,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::post('submitQuiz', [StudentQuizController::class, 'store']);
     Route::post('submitTask', [StudentTaskController::class, 'store']);
 
+    Route::post('updateStudent', [StudentController::class, 'update']);
     Route::post('updateStudentGroupCommentHide', [StudentGroupCommentController::class, 'updateStudentGroupCommentHide']);
 });
 

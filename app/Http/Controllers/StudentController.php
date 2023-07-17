@@ -169,9 +169,27 @@ public function login(Request $request){
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStudentRequest $request, Student $student)
+    public function update(Request $request, Student $student)
     {
-        //
+        $student = Student::where('id',auth()->user()->id)
+        ->first();
+
+        $student->name = $request->name;
+        $student->username = $request->username;
+        $student->save();
+        
+        if($student){
+            return ResponseFormatter::success(
+                $student,
+                'Data Student berhasil diupdate'
+            );
+        } else{
+            return ResponseFormatter::success(
+                null,
+                'Data Student tidak ada',
+                404
+            );
+        }
     }
 
     /**

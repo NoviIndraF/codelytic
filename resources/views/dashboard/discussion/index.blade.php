@@ -55,7 +55,7 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $discussion->title }}</td>
-                                    <td>{{ $discussion->name }}</td>
+                                    <td>{{ $discussion->room->name }}</td>
                                     <td>{{ $discussion->description }}</td>
                                     <td>
                                         <form action="/dashboard/discussions/showContent" method="post">

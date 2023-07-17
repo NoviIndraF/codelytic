@@ -13,6 +13,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StudentGroupCommentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use App\Models\StudentGroupComment;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -83,3 +84,5 @@ Route::post('/dashboard/tasks/show_content', [TaskController::class, 'showConten
 Route::resource('/dashboard/tasks', TaskController::class)->middleware('auth');
 
 Route::get('/dashboard/test', [TestController::class, 'index'])->middleware('auth');
+
+Route::resource('/dashboard/users', UserController::class)->middleware('auth');
