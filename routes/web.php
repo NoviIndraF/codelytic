@@ -86,3 +86,7 @@ Route::resource('/dashboard/tasks', TaskController::class)->middleware('auth');
 Route::get('/dashboard/test', [TestController::class, 'index'])->middleware('auth');
 
 Route::resource('/dashboard/users', UserController::class)->middleware('auth');
+
+Route::get('/forgot-password', function () {
+    return view('authentication.password.forgot-password');
+})->middleware('guest')->name('password.request');
