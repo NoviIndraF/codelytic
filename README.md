@@ -1,64 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Codelytic – Teacher Web Dashboard & API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Codelytic is a mobile learning platform for programming classes. This repository is the **Laravel web app**: teachers manage their classes, learning materials, tasks, quizzes and group discussions in a dashboard, and the same backend exposes a **REST API** used by the student mobile app ([codelytic_flutter](https://github.com/NoviIndraF/codelytic_flutter)).
 
-## About Laravel
+![Landing page](docs/screenshots/landing.png)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Teacher dashboard (web)**
+- Register and log in as a teacher.
+- **Classes (rooms):** each class gets a short join code that students enter in the mobile app.
+- **Materials and chapters:** write chapter content in a rich text editor (CKEditor) with image upload, and publish or hide each material.
+- **Tasks:** create assignments with a deadline and review student submissions.
+- **Quizzes:** multiple-choice quizzes grouped by difficulty level, with per-student results and answer details.
+- **Discussions:** create discussion topics and student groups, and moderate group comments (hide/show).
+- Dashboard with totals for classes, materials, tasks and quizzes.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**API for the mobile app**
+- Student register / login with token authentication (Laravel Sanctum).
+- Join a class or group by code.
+- Fetch materials, chapters, tasks and quizzes per class; submit tasks and quiz answers.
+- Send and hide comments in group discussions; update the student profile.
 
-## Learning Laravel
+## Screenshots
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Dashboard | Classes |
+|---|---|
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Classes](docs/screenshots/classes.png) |
+| **Material and chapters** | **Tasks** |
+| ![Material](docs/screenshots/materials.png) | ![Tasks](docs/screenshots/tasks.png) |
+| **Quizzes** | **Landing page features** |
+| ![Quizzes](docs/screenshots/quizzes.png) | ![Features](docs/screenshots/features.png) |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech stack
 
-## Laravel Sponsors
+- Laravel 8, PHP 7.3+ / 8.0
+- Laravel Fortify (authentication), Laravel Sanctum (API tokens)
+- MySQL
+- Blade templates, CKEditor
+- `cviebrock/eloquent-sluggable` for slugs
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Getting started
 
-### Premium Partners
+Requirements: PHP 7.3–8.1, Composer, MySQL.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+composer install
+cp .env.example .env          # set DB_DATABASE, DB_USERNAME, DB_PASSWORD
+php artisan key:generate
+php artisan migrate --seed    # creates the tables and sample data
+php artisan serve
+```
 
-## Contributing
+- Web dashboard: http://127.0.0.1:8000 (register a teacher account at `/register`)
+- API base URL: http://127.0.0.1:8000/api/ (from an Android emulator: `http://10.0.2.2:8000/api/`)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The seeder fills every table with fake data; seeded users have the password `password`.
 
-## Code of Conduct
+## Project structure
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+app/Http/Controllers/   Web dashboard controllers + API endpoints (Student*, *ByRoomId, show*)
+app/Models/             Room, Materi, Chapter, Task, Quiz, Question, Discussion, Group,
+                        Student, StudentRoom, StudentTask, StudentQuiz, StudentGroup, StudentGroupComment
+app/Policies/           Authorization per resource
+database/migrations/    Tables for classes, materials, tasks, quizzes, discussions and student data
+database/seeders/       Sample data
+resources/views/        landingpage/, authentication/, dashboard/, api/ (chapter and discussion pages shown in the app)
+routes/web.php          Dashboard routes
+routes/api.php          Mobile app API
+public/uploads/         Images uploaded from the editor
+```
 
-## Security Vulnerabilities
+## Related
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Student mobile app (Flutter): [NoviIndraF/codelytic_flutter](https://github.com/NoviIndraF/codelytic_flutter)
